@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<head>
+  <title>React - Like</title>
+  <link rel="stylesheet" href="like.css" />
+</head>
+
+<body>
+  <h1>React - Like</h1>
+  <div id="react-goes-here"></div>
+
+  <script src="react.js"></script>
+  <script src="like.js"></script>
+  <script>
+    var container = document.querySelector('#react-goes-here');
+    React.renderComponent(Like(), container);
+  </script>
+</body>

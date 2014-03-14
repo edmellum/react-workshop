@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+  <title>React - Photosnap</title>
+  <link rel="stylesheet" href="photosnap.css" />
+</head>
+
+<body>
+  <h1>React - Photosnap</h1>
+  <div id="react-goes-here"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="react.js"></script>
+  <script src="photosnap.js"></script>
+  <script>
+    // This socket will emit events from the server.
+    var socket = io.connect('http://localhost');
+
+    var container = document.querySelector('#react-goes-here');
+    var view = ImageList({text: 'Like this'});
+    React.renderComponent(view, container);
+
+    socket.on('uploaded', function(data) {
+      view.addImage(data);
+    });
+  </script>
+</body>

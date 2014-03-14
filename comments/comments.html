@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<head>
+  <title>React - Comments</title>
+  <link rel="stylesheet" href="comments.css" />
+</head>
+
+<body>
+  <h1>React - Comments</h1>
+  <div id="react-goes-here"></div>
+
+  <script src="react.js"></script>
+  <script src="jsxtransformer.js"></script>
+  <script src="comments.js"></script>
+  <script>
+    var container = document.querySelector('#react-goes-here');
+    React.renderComponent(Comments({text: 'Like this'}), container);
+  </script>
+</body>
