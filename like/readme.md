@@ -24,5 +24,5 @@ There's no server or persisting going on here, just UI. Just open the
 
 - Make the button/link become red when clicked. *Hint* look at the css file.
 - Make the button toggle red when clicked.
-- Add the ability to send a default like value in case a user already has liked something.
+- Add the ability to send a default like value in case a user already has liked something. *Hint* look at the html file and `this.props` for this and the next task.
 - Make the text configurable.

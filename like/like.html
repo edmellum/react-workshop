@@ -12,6 +12,6 @@
   <script src="like.js"></script>
   <script>
     var container = document.querySelector('#react-goes-here');
-    React.renderComponent(Like(), container);
+    React.renderComponent(Like({defaultLiked: true, text: 'like me!'}), container);
   </script>
 </body>
