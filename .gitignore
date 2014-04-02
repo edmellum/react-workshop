@@ -1,2 +1,3 @@
 .module-cache
+.DS_Store
 build
