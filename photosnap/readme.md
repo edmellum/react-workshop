@@ -15,7 +15,7 @@ To continually compile when the files change run the following
 command.
 
 ```bash
-$ jsx --watch -x jsx . .
+$ jsx --watch -x jsx . build
 ```
 
 ## Running it
