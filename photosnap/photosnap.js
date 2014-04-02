@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
 (function() {
+  var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
   // Takes a form DOM element and submits it as multipart AJAX.
   var upload = function(formEl, callback) {
     var formData = new FormData(formEl);
@@ -17,24 +19,24 @@
     xhr.send(formData);
   };
 
-  var UploadForm = React.createClass({
+  var UploadForm = React.createClass({displayName: 'UploadForm',
     render: function() {
       return (
-        <form>
-          <input name="file" type="file" />
-          <input type="submit" />
-        </form>
+        React.DOM.form(null, 
+          React.DOM.input( {name:"file", type:"file"} ),
+          React.DOM.input( {type:"submit"} )
+        )
       );
     }
   });
 
-  window.ImageList = React.createClass({
+  window.ImageList = React.createClass({displayName: 'ImageList',
     render: function() {
       return (
-        <div>
-          <UploadForm />
-          <h2>A list of images goes here</h2>
-        </div>
+        React.DOM.div(null, 
+          UploadForm(null ),
+          React.DOM.h2(null, "A list of images goes here")
+        )
       );
     }
   });

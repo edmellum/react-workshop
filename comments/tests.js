@@ -52,6 +52,8 @@ describe('comments', function() {
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
 
+    assert.lengthOf(comments.state.comments, 4);
+
     var lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
     assert.lengthOf(lis, 3);
   });
