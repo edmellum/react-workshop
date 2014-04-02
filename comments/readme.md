@@ -21,4 +21,4 @@ There's no server or persisting going on here, just UI. Just open the
 
 ## The TODO list
 
-There are only tests! Open the [Test HTML file](tests.html) to run them, your job is to make them pass.
+There are only tests! Open the [Test HTML file](tests.html) to run them, your job is to make them pass. If in doubt it might be useful to read the tests in `tests.js`, I have commented the code in `comments.jsx` with hints however so you should start there.

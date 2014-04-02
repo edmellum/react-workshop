@@ -25,6 +25,7 @@
     render: function() {
       return (
           <form onSubmit={this.submitted}>
+            {/* Don't change the classes of these inputs as the tests depend on it. */}
             <input ref="commentInput" className="comment-input" type="text" />
             <input className="search-input" type="text" />
             <input type="submit" />
@@ -56,6 +57,7 @@
       // is a great and functional way of handling list rendering. A
       // typical react component uses this pattern a lot.
       var lis = this.state.comments.map(function(comment) {
+        // Don't change the class of this as the tests depend on it.
         return <li className="comment">{comment}</li>;
       });
 
