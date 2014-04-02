@@ -1,10 +1,8 @@
 /** @jsx React.DOM */
 
 (function() {
+  var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-  // Let's a user enter a comment and notifies the Comments component
-  // when a comment is submitted. Doesn't actually store the state of
-  // the comments, we leave that up to the Comment component.
   var CommentForm = React.createClass({
     getInitialState: function() {
       return {
@@ -12,62 +10,88 @@
       };
     },
 
-    submitted: function() {
-      // React has no data binding so the component isn't updated, we
-      // have to go to the source(the DOM) to get the new value.
-      var value = this.refs.commentInput.getDOMNode().value;
-      console.log('The comment is:', value);
+    submitted: function(event) {
+      event.preventDefault();
+      this.props.onComment(this.state.text);
+      this.setState({text: ''});
+    },
 
-      // Inform the parent component of the submission.
-      this.props.onComment('hello!');
+    textUpdate: function(event) {
+      var value = this.refs.commentInput.getDOMNode().value;
+      if(value.length > 10) return;
+      this.setState({text: value});
+    },
+
+    searched: function (event) {
+      this.props.onSearch(event.target.value.toLowerCase());
     },
 
     render: function() {
       return (
           <form onSubmit={this.submitted}>
-            <input ref="commentInput" className="comment-input" type="text" />
-            <input className="search-input" type="text" />
-            <input type="submit" />
+            <div>Max 10: {this.state.text.length}</div>
+            <input ref="commentInput" className="comment-input" onChange={this.textUpdate} value={this.state.text} type="text" />
+            <input ref="searchInput" className="search-input" onChange={this.searched} type="text" />
           </form>
       );
     }
   });
 
-  // Shows all the submitted comments and renders the CommentForm
-  // component making sure to pass along a function to be called when
-  // a comment is submitted.
   window.Comments = React.createClass({
     getInitialState: function() {
       return {
-        // Don't change name of this, as the tests rely on it.
-        comments: ['some comment']
+        expanded: false,
+        search: '',
+        comments: []
       };
     },
 
-    addComment: function(thing) {
-      // We need the form component to call this so we can add new
-      // comments to the list. Communicating with other components can
-      // be done by just passing this function to the component.
-      console.log(thing);
+    addComment: function(comment) {
+      var comments = this.state.comments;
+      comments.push(comment);
+      this.setState({comments: comments});
+    },
+
+    expandToggle: function(event) {
+      event.preventDefault();
+      this.setState({expanded: !this.state.expanded});
+    },
+
+    updateSearch: function(search) {
+      this.setState({search: search});
     },
 
     render: function() {
-      // Mapping and array of some state into an array of components
-      // is a great and functional way of handling list rendering. A
-      // typical react component uses this pattern a lot.
-      var lis = this.state.comments.map(function(comment) {
+      var comments, expandText, expandDisplay;
+
+      var filteredComments = this.state.comments.filter(function(comment) {
+        return comment.toLowerCase().indexOf(this.state.search) != -1;
+      }, this);
+
+      if(filteredComments.length > 3) {
+        expandDisplay = 'block';
+      } else {
+        expandDisplay = 'none';
+      }
+      if(!this.state.expanded) {
+        expandText = 'Read more...';
+        comments = filteredComments.slice(-3);
+      } else {
+        expandText = 'Read less...';
+        comments = filteredComments;
+      }
+
+      var els = comments.map(function(comment) {
         return <li className="comment">{comment}</li>;
       });
 
       return (
         <div>
-          {/* The `onComment` becomes `this.props.onComment` in CommentForm */}
-          <CommentForm onComment={this.addComment} />
+          <CommentForm onComment={this.addComment} onSearch={this.updateSearch} />
           <ul>
-            {lis}
+            {els}
           </ul>
-          {/* The `display: none` part is a hint for the expand task */}
-          <a href="#" className="expander" style={{display: 'none'}}>Read more...</a>
+          <a href="#" className="expander" onClick={this.expandToggle} style={{display: expandDisplay}}>{expandText}</a>
         </div>
       );
     }
