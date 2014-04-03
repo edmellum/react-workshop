@@ -1,0 +1,35 @@
+/** @jsx React.DOM */
+
+(function() {
+  window.Like = React.createClass({
+    getInitialState: function() {
+      return {
+        liked: this.props.defaultLiked
+      };
+    },
+
+    clicked: function(event) {
+      event.preventDefault();
+      this.setState({liked: !this.state.liked});
+      // $.post('/like', {liked: this.state.liked})
+    },
+
+    render: function() {
+      var theArray = ['this', 'that', 'hello', 'there'];
+
+      var els = theArray.map(function(item) {
+        return <li key={item}>item</li>;
+      });
+      
+      var className = this.state.liked ? 'liked' : '';
+      return (
+          <div>
+            <a ref="thelink" className={className} onClick={this.clicked} href="#">{this.props.text}</a>;
+            <ul>
+              {els}
+            </ul>
+          </div>
+      );
+    }
+  });
+})();
