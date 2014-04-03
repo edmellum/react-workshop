@@ -19,7 +19,7 @@ describe('comments', function() {
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
 
-    assert.lengthOf(comments.state.comments, 1);
+    assert.lengthOf(comments.state.comments, 2);
   });
  
   // Twiter is awesome right? Well then less is more. Try inserting
