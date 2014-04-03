@@ -19,7 +19,7 @@ describe('comments', function() {
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
 
-    assert.lengthOf(comments.state.comments, 2);
+    assert.lengthOf(comments.state.comments, 1);
   });
  
   // Twiter is awesome right? Well then less is more. Try inserting
@@ -33,7 +33,7 @@ describe('comments', function() {
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
 
-    assert.equal(comments.state.comments[0], 'under 10');
+    assert.equal(comments.state.comments.length, 1);
   });
 
   // Finds all elements with `comment` class and asserts there are
