@@ -41,7 +41,7 @@
     getInitialState: function() {
       return {
         // Don't change name of this, as the tests rely on it.
-        comments: ['some comment']
+        comments: []
       };
     },
 
