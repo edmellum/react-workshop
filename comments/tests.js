@@ -21,19 +21,18 @@ describe('comments', function() {
 
     assert.lengthOf(comments.state.comments, 1);
   });
- 
+
   // Twiter is awesome right? Well then less is more. Try inserting
   // more than 10 characters and check that `state.comments` only has
-  // a truncated string.
+  // the short string.
   it('should not be possible to enter more than 10 characters', function() {
-    commentInput.getDOMNode().value = 'under 10';
+    commentInput.getDOMNode().value = '1234567890';
     testUtils.Simulate.change(commentInput);
-    testUtils.Simulate.submit(form);
-    commentInput.getDOMNode().value = 'more than ten characters';
+    commentInput.getDOMNode().value = '1234567890 and more';
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
 
-    assert.equal(comments.state.comments[0], 'under 10');
+    assert.equal(comments.state.comments[0], '1234567890');
   });
 
   // Finds all elements with `comment` class and asserts there are
@@ -51,8 +50,6 @@ describe('comments', function() {
     commentInput.getDOMNode().value = 'four';
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
-
-    assert.lengthOf(comments.state.comments, 4);
 
     var lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
     assert.lengthOf(lis, 3);
@@ -74,10 +71,13 @@ describe('comments', function() {
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
 
+    var lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
+    assert.lengthOf(lis, 3);
+
     var expander = testUtils.findRenderedDOMComponentWithClass(comments, 'expander');
     testUtils.Simulate.click(expander);
 
-    var lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
+    lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
     assert.lengthOf(lis, 4);
   });
 
@@ -94,12 +94,14 @@ describe('comments', function() {
     testUtils.Simulate.change(commentInput);
     testUtils.Simulate.submit(form);
 
+    var lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
+    assert.lengthOf(lis, 3);
+
     var searcher = testUtils.findRenderedDOMComponentWithClass(comments, 'search-input');
     searcher.getDOMNode().value = 'two';
     testUtils.Simulate.change(searcher);
 
-    var lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
+    lis = testUtils.scryRenderedDOMComponentsWithClass(comments, 'comment');
     assert.lengthOf(lis, 1);
-    assert.equal(lis[0].getDOMNode().innerHTML, 'two');
   });
 });
